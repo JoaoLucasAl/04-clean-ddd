@@ -1,5 +1,4 @@
-// @ts-ignore
-import { randomUUID } from "bun:crypto";
+import { randomUUID } from "node:crypto";
 
 interface QuestionProps {
     title: string, 

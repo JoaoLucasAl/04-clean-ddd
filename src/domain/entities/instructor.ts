@@ -1,5 +1,4 @@
-// @ts-ignore
-import { randomUUID } from "bun:crypto";
+import { randomUUID } from "node:crypto";
 
 export class Instructor {
     public id: string;

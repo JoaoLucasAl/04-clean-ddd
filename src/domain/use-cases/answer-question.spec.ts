@@ -1,5 +1,4 @@
-// @ts-ignore
-import { expect, test } from 'bun:test'
+import { expect, test } from 'vitest'
 
 import { AnswerQuestionUseCase } from './answer-question'
 import { AnswerRepository } from '../repositories/answers-repository';
