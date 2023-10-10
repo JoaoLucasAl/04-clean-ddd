@@ -8,6 +8,7 @@
     "@types/node": "^20.7.0",
     "bun-types": "^1.0.1",
     "typescript": "^5.2.2",
+    "vite-tsconfig-paths": "^4.2.1",
     "vitest": "^0.34.5"
   },
   "peerDependencies": {
@@ -16,7 +17,11 @@
   "keywords": [],
   "license": "ISC",
   "scripts": {
-    "test": "vitest"
+    "test": "vitest run",
+    "test:wath": "vitest"
   },
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "dayjs": "^1.11.10"
+  }
 }
