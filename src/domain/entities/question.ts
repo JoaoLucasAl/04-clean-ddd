@@ -1,89 +1,90 @@
-import { Slug } from "./value-objects/slug";
-import { Entity } from "@/core/entities/entity";
-import { UniqueEntityID } from "@/core/entities/unique-entity-id";
-import { Optional } from "@/core/entities/types/optional";
-import dayjs from "dayjs";
+import { Slug } from './value-objects/slug'
+import { Entity } from '@/core/entities/entity'
+import { UniqueEntityID } from '@/core/entities/unique-entity-id'
+import { Optional } from '@/core/entities/types/optional'
+import dayjs from 'dayjs'
 
 interface QuestionProps {
-    authorId: UniqueEntityID
-    bestAwnserId?: UniqueEntityID
-    title: string 
-    content: string
-    slug: Slug 
-    createdAt: Date
-    updatedAt?: Date
+  authorId: UniqueEntityID
+  bestAnswerId?: UniqueEntityID
+  title: string
+  content: string
+  slug: Slug
+  createdAt: Date
+  updatedAt?: Date
 }
 
 export class Question extends Entity<QuestionProps> {
-    get authorId() {
-        return this.props.authorId;
-    }
+  get authorId() {
+    return this.props.authorId
+  }
 
-    get bestAwnserId() {
-        return this.props.bestAwnserId;
-    }
+  get bestAnswerId() {
+    return this.props.bestAnswerId
+  }
 
-    get title() {
-        return this.props.title;
-    }
+  set bestAnswerId(bestAnswerId: UniqueEntityID | undefined) {
+    this.props.bestAnswerId = bestAnswerId
+    this.touch()
+  }
 
-    get content() {
-        return this.props.content;
-    }
+  get title() {
+    return this.props.title
+  }
 
-    get slug() {
-        return this.props.slug;
-    }
+  set title(title: string) {
+    this.props.title = title
+    this.props.slug = Slug.createFromText(title)
 
-    get createdAt() {
-        return this.props.createdAt;
-    }
+    this.touch()
+  }
 
-    get updatedAt() {
-        return this.props.updatedAt;
-    }
+  get content() {
+    return this.props.content
+  }
 
-    get isNew(): boolean {
-        return dayjs().diff(this.props.createdAt, 'days') <= 3;
-    }
+  set content(content: string) {
+    this.props.content = content
+    this.touch()
+  }
 
-    get excerpt() {
-        return this.props.content
-            .substring(0, 120)
-            .trimEnd()
-            .concat('...')
-    }
+  get slug() {
+    return this.props.slug
+  }
 
-    private touch(){
-        this.props.updatedAt = new Date();
-    }
+  get createdAt() {
+    return this.props.createdAt
+  }
 
-    set title(title: string) {
-        this.props.title = title
-        this.props.slug = Slug.createFromText(title)
+  get updatedAt() {
+    return this.props.updatedAt
+  }
 
-        this.touch()    
-    }
-    set content(content: string) {
-        this.props.content = content;
-        this.touch();
-    }
+  get isNew(): boolean {
+    return dayjs().diff(this.props.createdAt, 'days') <= 3
+  }
 
-    set bestAnswerId(bestAnswerId: UniqueEntityID) {
-        this.props.bestAwnserId = bestAnswerId;
-        this.touch();
-    }
+  get excerpt() {
+    return this.props.content.substring(0, 120).trimEnd().concat('...')
+  }
 
-    static create(
-        props: Optional<QuestionProps, 'createdAt' | 'slug'>, 
-        id?: UniqueEntityID
-        ) {
-        const question = new Question({
-            ...props,
-            slug: props.slug ?? Slug.createFromText(props.title),
-            createdAt: new Date(),
-        }, id)
+  private touch() {
+    this.props.updatedAt = new Date()
+  }
 
-        return question
-    }
+  static create(
+    props: Optional<QuestionProps, 'createdAt' | 'slug'>,
+    id?: UniqueEntityID,
+  ) {
+    const question = new Question(
+      {
+        ...props,
+        slug: props.slug ?? Slug.createFromText(props.title),
+        createdAt: new Date(),
+      },
+      id,
+    )
+
+    return question
+  }
 }

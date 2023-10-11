@@ -2,25 +2,25 @@
   "name": "04-clean-ddd",
   "version": "1.0.0",
   "author": "",
-  "main": "index.ts",
-  "module": "index.ts",
+  "main": "index.js",
   "devDependencies": {
+    "@rocketseat/eslint-config": "^2.1.0",
     "@types/node": "^20.7.0",
     "bun-types": "^1.0.1",
-    "typescript": "^5.2.2",
+    "eslint": "^8.51.0",
+    "eslint-plugin-vitest-globals": "^1.4.0",
+    "typescript": "~5.0.4",
     "vite-tsconfig-paths": "^4.2.1",
     "vitest": "^0.34.5"
-  },
-  "peerDependencies": {
-    "typescript": "^5.0.0"
   },
   "keywords": [],
   "license": "ISC",
   "scripts": {
     "test": "vitest run",
-    "test:wath": "vitest"
+    "test:wath": "vitest",
+    "lint": "eslint src --ext .ts",
+    "lint:fix": "eslint src --ext .ts --fix"
   },
-  "type": "module",
   "dependencies": {
     "dayjs": "^1.11.10"
   }
