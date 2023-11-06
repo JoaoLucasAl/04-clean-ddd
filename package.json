@@ -4,6 +4,7 @@
   "author": "",
   "main": "index.js",
   "devDependencies": {
+    "@faker-js/faker": "^8.2.0",
     "@rocketseat/eslint-config": "^2.1.0",
     "@types/node": "^20.7.0",
     "bun-types": "^1.0.1",
