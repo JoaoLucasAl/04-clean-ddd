@@ -1,12 +1,13 @@
 import { QuestionsRepository } from '../repositories/question-repository'
 
 interface EditQuestionUseCaseRequest {
-    authorId: string
-    questionId: string
-    title: string
-    content: string
+  authorId: string
+  questionId: string
+  title: string
+  content: string
 }
 
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface EditQuestionUseCaseResponse {}
 
 export class EditQuestionUseCase {
@@ -16,9 +17,8 @@ export class EditQuestionUseCase {
     authorId,
     questionId,
     title,
-    content
+    content,
   }: EditQuestionUseCaseRequest): Promise<EditQuestionUseCaseResponse> {
-
     const question = await this.questionRepository.findById(questionId)
 
     if (!question) {
@@ -35,6 +35,5 @@ export class EditQuestionUseCase {
     await this.questionRepository.save(question)
 
     return {}
-    
   }
 }

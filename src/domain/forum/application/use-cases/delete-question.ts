@@ -1,10 +1,11 @@
 import { QuestionsRepository } from '../repositories/question-repository'
 
 interface DeleteQuestionUseCaseRequest {
-    authorId: string
-    questionId: string
+  authorId: string
+  questionId: string
 }
 
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface DeleteQuestionUseCaseResponse {}
 
 export class DeleteQuestionUseCase {
@@ -12,9 +13,8 @@ export class DeleteQuestionUseCase {
 
   async execute({
     authorId,
-    questionId
+    questionId,
   }: DeleteQuestionUseCaseRequest): Promise<DeleteQuestionUseCaseResponse> {
-
     const question = await this.questionRepository.findById(questionId)
 
     if (!question) {
@@ -28,6 +28,5 @@ export class DeleteQuestionUseCase {
     await this.questionRepository.delete(question)
 
     return {}
-    
   }
 }
