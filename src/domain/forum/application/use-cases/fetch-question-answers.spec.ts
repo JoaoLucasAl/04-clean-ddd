@@ -1,24 +1,24 @@
 import { makeQuestion } from 'test/factories/make-question'
 import { FetchQuestionAnswersUseCase } from './fetch-question-answers'
 import { makeAnswer } from 'test/factories/make-answer'
-import { InMemoryAnswerRepository } from 'test/repositories/in-memory-answers-repository'
+import { InMemoryAnswersRepository } from 'test/repositories/in-memory-answers-repository'
 
-let inMemoryAnswerRepository: InMemoryAnswerRepository
+let inMemoryAnswersRepository: InMemoryAnswersRepository
 let sut: FetchQuestionAnswersUseCase
 
 describe('Fetch Question Answers', () => {
   beforeEach(() => {
-    inMemoryAnswerRepository = new InMemoryAnswerRepository()
-    sut = new FetchQuestionAnswersUseCase(inMemoryAnswerRepository)
+    inMemoryAnswersRepository = new InMemoryAnswersRepository()
+    sut = new FetchQuestionAnswersUseCase(inMemoryAnswersRepository)
   })
 
   it('should be able to fetch answers from an question', async () => {
     const question = makeQuestion()
 
-    await inMemoryAnswerRepository.create(
+    await inMemoryAnswersRepository.create(
       makeAnswer({ questionId: question.id }),
     )
-    await inMemoryAnswerRepository.create(
+    await inMemoryAnswersRepository.create(
       makeAnswer({ questionId: question.id }),
     )
 
@@ -34,7 +34,7 @@ describe('Fetch Question Answers', () => {
     const question = makeQuestion()
 
     for (let i = 1; i <= 22; i++) {
-      await inMemoryAnswerRepository.create(
+      await inMemoryAnswersRepository.create(
         makeAnswer({ questionId: question.id }),
       )
     }

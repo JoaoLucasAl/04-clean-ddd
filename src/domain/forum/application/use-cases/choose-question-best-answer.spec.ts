@@ -2,21 +2,21 @@ import { InMemoryQuestionsRepository } from 'test/repositories/in-memory-questio
 import { makeQuestion } from 'test/factories/make-question'
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { ChooseQuestionBestAnswer } from './choose-question-best-answer'
-import { InMemoryAnswerRepository } from 'test/repositories/in-memory-answers-repository'
+import { InMemoryAnswersRepository } from 'test/repositories/in-memory-answers-repository'
 import { makeAnswer } from 'test/factories/make-answer'
 
-let inMemoryAnswerRepository: InMemoryAnswerRepository
+let inMemoryAnswersRepository: InMemoryAnswersRepository
 let inMemoryQuestionsRepository: InMemoryQuestionsRepository
 let sut: ChooseQuestionBestAnswer
 
 describe('Choose Question Best Answer', () => {
   beforeEach(() => {
-    inMemoryAnswerRepository = new InMemoryAnswerRepository()
+    inMemoryAnswersRepository = new InMemoryAnswersRepository()
     inMemoryQuestionsRepository = new InMemoryQuestionsRepository()
 
     sut = new ChooseQuestionBestAnswer(
       inMemoryQuestionsRepository,
-      inMemoryAnswerRepository,
+      inMemoryAnswersRepository,
     )
   })
 
@@ -28,7 +28,7 @@ describe('Choose Question Best Answer', () => {
     })
 
     await inMemoryQuestionsRepository.create(question)
-    await inMemoryAnswerRepository.create(answer)
+    await inMemoryAnswersRepository.create(answer)
 
     await sut.execute({
       answerId: answer.id.toString(),
@@ -51,7 +51,7 @@ it('should not be able to choose another user question best answer', async () =>
   })
 
   await inMemoryQuestionsRepository.create(question)
-  await inMemoryAnswerRepository.create(answer)
+  await inMemoryAnswersRepository.create(answer)
 
   expect(() => {
     return sut.execute({

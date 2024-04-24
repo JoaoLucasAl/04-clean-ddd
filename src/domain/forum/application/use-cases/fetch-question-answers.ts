@@ -1,5 +1,5 @@
 import { Answer } from '../../enterprise/entities/answer'
-import { AnswerRepository } from '../repositories/answers-repository'
+import { AnswersRepository } from '../repositories/answers-repository'
 
 interface FetchQuestionAnswersUseCaseRequest {
   questionId: string
@@ -11,7 +11,7 @@ interface FetchQuestionAnswersUseCaseResponse {
 }
 
 export class FetchQuestionAnswersUseCase {
-  constructor(private answerRepository: AnswerRepository) {}
+  constructor(private answerRepository: AnswersRepository) {}
 
   async execute({
     questionId,
