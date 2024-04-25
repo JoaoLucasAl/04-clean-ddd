@@ -22,12 +22,12 @@ describe('Fetch Question Answers', () => {
       makeAnswer({ questionId: question.id }),
     )
 
-    const { answers } = await sut.execute({
+    const { value } = await sut.execute({
       questionId: question.id.toString(),
       page: 1,
     })
 
-    expect(answers).toHaveLength(2)
+    expect(value?.answers).toHaveLength(2)
   })
 
   it('should be able to fetch answers from an question', async () => {
@@ -39,11 +39,11 @@ describe('Fetch Question Answers', () => {
       )
     }
 
-    const { answers } = await sut.execute({
+    const { value } = await sut.execute({
       questionId: question.id.toString(),
       page: 2,
     })
 
-    expect(answers).toHaveLength(2)
+    expect(value?.answers).toHaveLength(2)
   })
 })
