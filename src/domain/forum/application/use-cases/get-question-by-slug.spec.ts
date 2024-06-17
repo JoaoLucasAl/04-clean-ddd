@@ -2,6 +2,7 @@ import { InMemoryQuestionsRepository } from 'test/repositories/in-memory-questio
 import { GetQuestionBySlugUseCase } from './get-question-by-slug'
 import { makeQuestion } from 'test/factories/make-question'
 import { Slug } from '../../enterprise/entities/value-objects/slug'
+import { fail } from 'node:assert'
 
 let inMemoryQuestionsRepository: InMemoryQuestionsRepository
 let sut: GetQuestionBySlugUseCase
@@ -23,7 +24,11 @@ describe('Get Question By Slug', () => {
       slug: 'example-question',
     })
 
-    expect(value?.question.id).toBeTruthy()
-    expect(inMemoryQuestionsRepository.items[0].id).toEqual(value?.question.id)
+    if ('question' in value) {
+      expect(value.question.id).toBeTruthy()
+      expect(inMemoryQuestionsRepository.items[0].id).toEqual(value.question.id)
+    } else {
+      fail('Expected value to be a question')
+    }
   })
 })
