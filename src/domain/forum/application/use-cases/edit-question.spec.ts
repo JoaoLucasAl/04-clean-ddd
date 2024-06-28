@@ -1,7 +1,7 @@
 import { InMemoryQuestionsRepository } from 'test/repositories/in-memory-questions-repository'
 import { makeQuestion } from 'test/factories/make-question'
 import { EditQuestionUseCase } from './edit-question'
-import { NotAllowedError } from './errors/not-allowed-error'
+import { NotAllowedError } from '@/core/errors/errors/not-allowed-error'
 import { InMemoryQuestionAttachmentsRepository } from 'test/repositories/in-memory-question-attachments-repository'
 import { makeQuestionAttachment } from 'test/factories/make-question-attachment'
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
@@ -12,8 +12,8 @@ let sut: EditQuestionUseCase
 
 describe('Edit Question', () => {
   beforeEach(() => {
-    inMemoryQuestionsRepository = new InMemoryQuestionsRepository()
     inMemoryQuestionAttachmentsRepository = new InMemoryQuestionAttachmentsRepository()
+    inMemoryQuestionsRepository = new InMemoryQuestionsRepository(inMemoryQuestionAttachmentsRepository)
     sut = new EditQuestionUseCase(inMemoryQuestionsRepository, inMemoryQuestionAttachmentsRepository)
   })
 
@@ -38,7 +38,7 @@ describe('Edit Question', () => {
       authorId: newQuestion.authorId.toString(),
       content: 'new content',
       title: 'new title',
-      attachmentIds: ['1', '3']
+      attachmentsIds: ['1', '3']
     })
 
     expect(inMemoryQuestionsRepository.items[0]).toMatchObject({
@@ -62,7 +62,7 @@ describe('Edit Question', () => {
       authorId: 'wrong-author-id',
       content: 'new content',
       title: 'new title',
-      attachmentIds: []
+      attachmentsIds: []
     })
 
     expect(value).instanceOf(NotAllowedError)

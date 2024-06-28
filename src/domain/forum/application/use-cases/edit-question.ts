@@ -1,7 +1,7 @@
 import { Either, left, right } from '@/core/either'
 import { QuestionsRepository } from '../repositories/questions-repository'
-import { NotAllowedError } from './errors/not-allowed-error'
-import { ResourceNotFoundError } from './errors/resource-not-found-error'
+import { NotAllowedError } from '@/core/errors/errors/not-allowed-error'
+import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error'
 import { QuestionAttachmentsRepository } from '../repositories/question-attachments-repository'
 import { QuestionAttachmentList } from '../../enterprise/entities/question-attachment-list'
 import { QuestionAttachment } from '../../enterprise/entities/question-attachment'
@@ -12,7 +12,7 @@ interface EditQuestionUseCaseRequest {
   questionId: string
   title: string
   content: string
-  attachmentIds: string[]
+  attachmentsIds: string[]
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -32,7 +32,7 @@ export class EditQuestionUseCase {
     questionId,
     title,
     content,
-    attachmentIds
+    attachmentsIds
   }: EditQuestionUseCaseRequest): Promise<EditQuestionUseCaseResponse> {
     const question = await this.questionRepository.findById(questionId)
 
@@ -48,7 +48,7 @@ export class EditQuestionUseCase {
 
     const questionAttachmentList = new QuestionAttachmentList(currentQuestionAttachments)
 
-    const questionAttachments = attachmentIds.map(attachmentId => {
+    const questionAttachments = attachmentsIds.map(attachmentId => {
       return QuestionAttachment.create({
         attachmentId: new UniqueEntityID(attachmentId),
         questionId: question.id

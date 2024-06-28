@@ -9,5 +9,4 @@ export interface AnswerCommentsRepository {
     ): Promise<AnswerComment[]>
   create(answerComment: AnswerComment): Promise<void>
   delete(answerComment: AnswerComment): Promise<void>
-
 }

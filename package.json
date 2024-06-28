@@ -18,7 +18,7 @@
   "license": "ISC",
   "scripts": {
     "test": "vitest run",
-    "test:wath": "vitest",
+    "test:watch": "vitest",
     "lint": "eslint src --ext .ts",
     "lint:fix": "eslint src --ext .ts --fix"
   },
