@@ -28,9 +28,9 @@ describe('Delete Question Comment', () => {
     expect(inMemoryQuestionCommentsRepository.items).toHaveLength(0)
   })
 
- it('should not be able to delete another user question comment', async () => {
+  it('should not be able to delete another user question comment', async () => {
     const questionComment = makeQuestionComment({
-        authorId: new UniqueEntityID('another-user-id'),
+      authorId: new UniqueEntityID('another-user-id'),
     })
 
     await inMemoryQuestionCommentsRepository.create(questionComment)
@@ -38,10 +38,10 @@ describe('Delete Question Comment', () => {
     const { value } = await sut.execute({
       questionCommentId: questionComment.id.toString(),
       authorId: 'user-id',
-      })
+    })
 
     expect(value).instanceOf(NotAllowedError)
 
-    expect(inMemoryQuestionCommentsRepository.items).toHaveLength(1)    
+    expect(inMemoryQuestionCommentsRepository.items).toHaveLength(1)
   })
 })

@@ -11,7 +11,7 @@ interface DeleteAnswerUseCaseRequest {
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 type DeleteAnswerUseCaseResponse = Either<
   ResourceNotFoundError | NotAllowedError,
-  {}
+  null
 >
 
 export class DeleteAnswerUseCase {
@@ -33,6 +33,6 @@ export class DeleteAnswerUseCase {
 
     await this.answerRepository.delete(answer)
 
-    return right({})
+    return right(null)
   }
 }

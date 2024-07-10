@@ -10,7 +10,7 @@ interface FetchQuestionCommentsUseCaseRequest {
 type FetchQuestionCommentsUseCaseResponse = Either<
   null,
   {
-  questionComments: QuestionComment[]
+    questionComments: QuestionComment[]
   }
 >
 
@@ -21,10 +21,10 @@ export class FetchQuestionCommentsUseCase {
     questionId,
     page,
   }: FetchQuestionCommentsUseCaseRequest): Promise<FetchQuestionCommentsUseCaseResponse> {
-    const questionComments = await this.questionCommentsRepository.findManyByQuestionId(
-      questionId,
-      { page },
-    )
+    const questionComments =
+      await this.questionCommentsRepository.findManyByQuestionId(questionId, {
+        page,
+      })
 
     return right({
       questionComments,

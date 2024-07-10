@@ -9,8 +9,7 @@ let sut: DeleteAnswerCommentUseCase
 
 describe('Delete Answer Comment', () => {
   beforeEach(() => {
-    inMemoryAnswerCommentsRepository =
-      new InMemoryAnswerCommentsRepository()
+    inMemoryAnswerCommentsRepository = new InMemoryAnswerCommentsRepository()
 
     sut = new DeleteAnswerCommentUseCase(inMemoryAnswerCommentsRepository)
   })
@@ -28,22 +27,20 @@ describe('Delete Answer Comment', () => {
     expect(inMemoryAnswerCommentsRepository.items).toHaveLength(0)
   })
 
- it('should not be able to delete another user answer comment', async () => {
+  it('should not be able to delete another user answer comment', async () => {
     const answerComment = makeAnswerComment({
-        authorId: new UniqueEntityID('another-user-id'),
+      authorId: new UniqueEntityID('another-user-id'),
     })
 
     await inMemoryAnswerCommentsRepository.create(answerComment)
 
-    
     const response = await sut.execute({
       answerCommentId: answerComment.id.toString(),
       authorId: 'user-id',
-      })
+    })
 
     expect(response.isLeft()).toBeTruthy()
     expect(response.value).toBeInstanceOf(NotAllowedError)
-    expect(inMemoryAnswerCommentsRepository.items).toHaveLength(1)    
-    
+    expect(inMemoryAnswerCommentsRepository.items).toHaveLength(1)
   })
 })

@@ -35,7 +35,7 @@ export class Answer extends AggregateRoot<AnswerProps> {
     return this.props.attachments
   }
 
-  set attachments(attachments: AnswerAttachmentList){
+  set attachments(attachments: AnswerAttachmentList) {
     this.props.attachments = attachments
     this.touch()
   }

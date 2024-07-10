@@ -9,7 +9,7 @@ interface FetchRecentQuestionsUseCaseRequest {
 type FetchRecentQuestionsUseCaseResponse = Either<
   null,
   {
-  questions: Question[]
+    questions: Question[]
   }
 >
 

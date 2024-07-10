@@ -1,5 +1,3 @@
-import { UniqueEntityID } from '@/core/entities/unique-entity-id'
-import { Answer } from '../../enterprise/entities/answer'
 import { AnswersRepository } from '../repositories/answers-repository'
 import { Question } from '../../enterprise/entities/question'
 import { QuestionsRepository } from '../repositories/questions-repository'
@@ -13,11 +11,11 @@ interface ChooseQuestionBestAnswerRequest {
 }
 
 type ChooseQuestionBestAnswerResponse = Either<
-  ResourceNotFoundError | NotAllowedError, 
+  ResourceNotFoundError | NotAllowedError,
   {
-  question: Question
+    question: Question
   }
-> 
+>
 export class ChooseQuestionBestAnswer {
   constructor(
     private questionRepository: QuestionsRepository,

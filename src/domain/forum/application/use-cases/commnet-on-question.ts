@@ -14,7 +14,7 @@ interface CommentOnQuestionUseCaseRequest {
 type CommentOnQuestionUseCaseResponse = Either<
   ResourceNotFoundError,
   {
-  questionComment: QuestionComment
+    questionComment: QuestionComment
   }
 >
 

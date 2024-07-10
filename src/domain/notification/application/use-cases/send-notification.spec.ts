@@ -18,8 +18,12 @@ describe('Send Notification', () => {
     })
 
     expect(result.isRight()).toBe(true)
-    expect(result.value?.notification.content).toEqual('Conteúdo da notificação')
+    expect(result.value?.notification.content).toEqual(
+      'Conteúdo da notificação',
+    )
     expect(result.value?.notification.id).toBeTruthy()
-    expect(inMemoryNotificationsRepository.items[0].id).toEqual(result.value?.notification.id)
+    expect(inMemoryNotificationsRepository.items[0].id).toEqual(
+      result.value?.notification.id,
+    )
   })
 })

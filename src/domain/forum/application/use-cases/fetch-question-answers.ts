@@ -10,7 +10,7 @@ interface FetchQuestionAnswersUseCaseRequest {
 type FetchQuestionAnswersUseCaseResponse = Either<
   null,
   {
-  answers: Answer[]
+    answers: Answer[]
   }
 >
 

@@ -17,19 +17,19 @@ interface EditAnswerUseCaseRequest {
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 type EditAnswerUseCaseResponse = Either<
   ResourceNotFoundError | NotAllowedError,
-  {}
+  null
 >
 export class EditAnswerUseCase {
   constructor(
     private answerRepository: AnswersRepository,
-    private answerAttachmentsRepository: AnswerAttachmentsRepository
-    ) {}
+    private answerAttachmentsRepository: AnswerAttachmentsRepository,
+  ) {}
 
   async execute({
     authorId,
     answerId,
     content,
-    attachmentsIds
+    attachmentsIds,
   }: EditAnswerUseCaseRequest): Promise<EditAnswerUseCaseResponse> {
     const answer = await this.answerRepository.findById(answerId)
 
@@ -41,14 +41,17 @@ export class EditAnswerUseCase {
       return left(new NotAllowedError())
     }
 
-    const currentAnswerAttachments = await this.answerAttachmentsRepository.findManyByAnswerId(answerId)
+    const currentAnswerAttachments =
+      await this.answerAttachmentsRepository.findManyByAnswerId(answerId)
 
-    const answerAttachmentList = new AnswerAttachmentList(currentAnswerAttachments)
+    const answerAttachmentList = new AnswerAttachmentList(
+      currentAnswerAttachments,
+    )
 
-    const answerAttachments = attachmentsIds.map(attachmentId => {
+    const answerAttachments = attachmentsIds.map((attachmentId) => {
       return AnswerAttachment.create({
         attachmentId: new UniqueEntityID(attachmentId),
-        answerId: answer.id
+        answerId: answer.id,
       })
     })
 
@@ -57,9 +60,8 @@ export class EditAnswerUseCase {
     answer.content = content
     answer.attachments = answerAttachmentList
 
-
     await this.answerRepository.save(answer)
 
-    return right({})
+    return right(null)
   }
 }

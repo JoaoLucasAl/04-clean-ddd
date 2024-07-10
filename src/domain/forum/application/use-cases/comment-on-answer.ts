@@ -12,11 +12,11 @@ interface CommentOnAnswerUseCaseRequest {
 }
 
 type CommentOnAnswerUseCaseResponse = Either<
-  ResourceNotFoundError, 
+  ResourceNotFoundError,
   {
-  answerComment: AnswerComment
+    answerComment: AnswerComment
   }
-  >
+>
 
 export class CommentOnAnswerUseCase {
   constructor(
@@ -29,7 +29,6 @@ export class CommentOnAnswerUseCase {
     answerId,
     content,
   }: CommentOnAnswerUseCaseRequest): Promise<CommentOnAnswerUseCaseResponse> {
-    
     const answer = await this.answerRepository.findById(answerId)
 
     if (!answer) {

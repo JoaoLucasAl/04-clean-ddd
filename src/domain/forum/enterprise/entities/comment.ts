@@ -8,7 +8,9 @@ export interface CommentProps {
   updatedAt?: Date
 }
 
-export abstract class Comment<Props extends CommentProps> extends AggregateRoot<Props> {
+export abstract class Comment<
+  Props extends CommentProps,
+> extends AggregateRoot<Props> {
   get authorId() {
     return this.props.authorId
   }
@@ -34,4 +36,3 @@ export abstract class Comment<Props extends CommentProps> extends AggregateRoot<
     this.props.updatedAt = new Date()
   }
 }
-

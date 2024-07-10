@@ -16,20 +16,22 @@ export class QuestionComment extends Comment<QuestionCommentProps> {
     props: Optional<QuestionCommentProps, 'createdAt'>,
     id?: UniqueEntityID,
   ) {
-    const questionComment =  new QuestionComment(
+    const questionComment = new QuestionComment(
       {
         ...props,
         createdAt: props.createdAt ?? new Date(),
       },
       id,
     )
-    
+
     const isNewComment = !id
-  
-    if (isNewComment){
-      questionComment.addDomainEvent(new QuestionCommentEvent(questionComment.questionId))
+
+    if (isNewComment) {
+      questionComment.addDomainEvent(
+        new QuestionCommentEvent(questionComment.questionId),
+      )
     }
-      
+
     return questionComment
   }
 }

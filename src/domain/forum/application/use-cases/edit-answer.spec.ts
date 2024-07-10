@@ -12,9 +12,15 @@ let sut: EditAnswerUseCase
 
 describe('Edit Answer', () => {
   beforeEach(() => {
-    inMemoryAnswerAttachmentsRepository = new InMemoryAnswerAttachmentsRepository()
-    inMemoryAnswersRepository = new InMemoryAnswersRepository(inMemoryAnswerAttachmentsRepository)
-    sut = new EditAnswerUseCase(inMemoryAnswersRepository, inMemoryAnswerAttachmentsRepository)
+    inMemoryAnswerAttachmentsRepository =
+      new InMemoryAnswerAttachmentsRepository()
+    inMemoryAnswersRepository = new InMemoryAnswersRepository(
+      inMemoryAnswerAttachmentsRepository,
+    )
+    sut = new EditAnswerUseCase(
+      inMemoryAnswersRepository,
+      inMemoryAnswerAttachmentsRepository,
+    )
   })
 
   it('should be able to edit a answer', async () => {
@@ -23,31 +29,35 @@ describe('Edit Answer', () => {
     await inMemoryAnswersRepository.create(newAnswer)
 
     inMemoryAnswerAttachmentsRepository.items.push(
-          makeAnswerAttachment({
-            answerId: newAnswer.id,
-            attachmentId: new UniqueEntityID('1')
-          }),
-          makeAnswerAttachment({
-            answerId: newAnswer.id,
-            attachmentId: new UniqueEntityID('2')
-          })
-        )
+      makeAnswerAttachment({
+        answerId: newAnswer.id,
+        attachmentId: new UniqueEntityID('1'),
+      }),
+      makeAnswerAttachment({
+        answerId: newAnswer.id,
+        attachmentId: new UniqueEntityID('2'),
+      }),
+    )
 
     await sut.execute({
       authorId: newAnswer.authorId.toString(),
       answerId: newAnswer.id.toString(),
       content: 'new content',
-      attachmentsIds: ['1', '3']
+      attachmentsIds: ['1', '3'],
     })
 
     expect(inMemoryAnswersRepository.items[0]).toMatchObject({
       content: 'new content',
     })
-    expect(inMemoryAnswersRepository.items[0].attachments.currentItems).toHaveLength(2)
-    expect(inMemoryAnswersRepository.items[0].attachments.currentItems).toEqual([
-      expect.objectContaining({ attachmentId: new UniqueEntityID('1') }),
-      expect.objectContaining({ attachmentId: new UniqueEntityID('3') }),
-    ])
+    expect(
+      inMemoryAnswersRepository.items[0].attachments.currentItems,
+    ).toHaveLength(2)
+    expect(inMemoryAnswersRepository.items[0].attachments.currentItems).toEqual(
+      [
+        expect.objectContaining({ attachmentId: new UniqueEntityID('1') }),
+        expect.objectContaining({ attachmentId: new UniqueEntityID('3') }),
+      ],
+    )
   })
 
   it('should not be able to edit a answer from another user', async () => {
@@ -59,7 +69,7 @@ describe('Edit Answer', () => {
       answerId: newAnswer.id.toString(),
       authorId: 'wrong-author-id',
       content: 'new content',
-      attachmentsIds: []
+      attachmentsIds: [],
     })
 
     expect(value).instanceOf(NotAllowedError)

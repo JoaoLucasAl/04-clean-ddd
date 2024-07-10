@@ -8,12 +8,12 @@ import { AnswerAttachment } from '../../enterprise/entities/answer-attachment'
 interface AnswerQuestionUseCaseRequest {
   instructorId: string
   questionId: string
-  attachmentsIds: string[] 
+  attachmentsIds: string[]
   content: string
 }
 
 type AnswerQuestionUseCaseResponse = Either<
-  null, 
+  null,
   {
     answer: Answer
   }
@@ -26,7 +26,7 @@ export class AnswerQuestionUseCase {
     instructorId,
     questionId,
     content,
-    attachmentsIds
+    attachmentsIds,
   }: AnswerQuestionUseCaseRequest): Promise<AnswerQuestionUseCaseResponse> {
     const answer = Answer.create({
       content,
@@ -34,10 +34,10 @@ export class AnswerQuestionUseCase {
       questionId: new UniqueEntityID(questionId),
     })
 
-    const answerAttachments = attachmentsIds.map(attachmentId => {
+    const answerAttachments = attachmentsIds.map((attachmentId) => {
       return AnswerAttachment.create({
         attachmentId: new UniqueEntityID(attachmentId),
-        answerId: answer.id
+        answerId: answer.id,
       })
     })
 
